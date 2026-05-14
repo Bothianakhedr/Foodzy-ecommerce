@@ -1,5 +1,3 @@
-"use client";
-
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -26,14 +24,24 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export interface DataTableProps<TData, TValue> {
+export type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-}
+  title?: string;
+  description?: string;
+  searchKey?: string;
+  buttonText?: string;
+  setIsModalOpen: (isOpen: boolean) => void;
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  title,
+  description,
+  buttonText,
+  searchKey,
+  setIsModalOpen,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -56,16 +64,15 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+  console.log(table);
 
   return (
     <section>
+      {/* ############Header */}
       <div className="header flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold"> Popular Categories</h2>
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam eum
-            excepturi esse aliquid eligendi? Iste.
-          </p>
+          <h2 className="text-2xl font-bold"> {title}</h2>
+          <p className="text-sm text-gray-600">{description}</p>
         </div>
         <div className="flex items-center justify-center gap-3">
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
@@ -73,14 +80,20 @@ export function DataTable<TData, TValue>({
               ({table.getFilteredSelectedRowModel().rows.length}) items selected
             </div>
           )}
-          <Button className="p-4 h-10 cursor-pointer">Add New Category</Button>
+          <Button
+            className="p-4 h-10 cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {buttonText}
+          </Button>
         </div>
       </div>
+      {/* ###########filter */}
       <div className=" bg-gray-50 my-5 rounded-md p-5">
         <div className="relative">
           <Search className="text-gray-200 w-5 absolute left-2 top-1 " />
           <Input
-            placeholder="Search By Name..."
+            placeholder={searchKey}
             className="max-w-sm ps-8 "
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(e) => {
@@ -98,7 +111,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
       </div>
-
+      {/*    ########  table */}
       <div className="overflow-hidden rounded-md border ">
         <Table>
           <TableHeader className="bg-gray-50">
@@ -148,6 +161,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+        {/* ######## pagination */}
         {table.getFilteredRowModel().rows.length > 5 && (
           <PaginationIconsOnly table={table} />
         )}{" "}

@@ -10,8 +10,11 @@ export type Categories = {
   image: string;
 };
 
-export const columns: ColumnDef<Categories>[] = [
-     {
+export const columns = (
+  handleEdit: (data: Categories) => void,
+  handleDelete: (data: Categories) => void,
+): ColumnDef<Categories>[] => [
+  {
     id: "select",
     header: ({ table }) => (
       <Checkbox
@@ -70,13 +73,22 @@ export const columns: ColumnDef<Categories>[] = [
   {
     accessorKey: "action",
     header: "Action",
-    cell: () => (
+    cell: ({ row }) => (
       <div>
-        <Button variant="ghost" size="sm" className="cursor-pointer">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="cursor-pointer"
+          onClick={() => {
+            handleEdit(row.original)
+            
+          }}
+        >
           <Edit2Icon className="h-4 w-4" />
         </Button>
         <Button
           variant="ghost"
+          onClick={()=> handleDelete(row.original)}
           size="sm"
           className="text-red-600 cursor-pointer"
         >
