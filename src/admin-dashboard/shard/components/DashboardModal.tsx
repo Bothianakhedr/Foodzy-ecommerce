@@ -25,10 +25,9 @@ export function DashboardModal({
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-xl my-2 font-bold">{title}</DialogTitle>
+          <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
         </DialogHeader>
         <FieldGroup>{children}</FieldGroup>
-   
       </DialogContent>
     </Dialog>
   );

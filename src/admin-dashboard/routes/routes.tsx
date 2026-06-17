@@ -1,11 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Banner, Categories, DailyBestSells, OverView, SpecialDishes, UsersOpinions } from "../features";
+import {
+  Banner,
+  Categories,
+  DailyBestSells,
+  OverView,
+  SpecialDishes,
+  UsersOpinions,
+} from "../features";
 import Layout from "../layout/Layout";
+import { Login } from "../features/account/login/pages/Login";
+import { ProtectedRoute } from "../protectedRoute/ProtectedRoute";
 
 export const router = createBrowserRouter([
+  { path: "/login", element: <Login /> },
   {
     path: "",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <OverView /> },
       {

@@ -11,10 +11,14 @@ import {
 type AlertDialogPopUpProps = {
   isAlertOpen: boolean;
   setIsAlertOpen: (isOpen: boolean) => void;
+  confirmDelete :()=>void
+
 };
 export default function AlertDialogPopUp({
   isAlertOpen,
   setIsAlertOpen,
+  confirmDelete
+  
 }: AlertDialogPopUpProps) {
   return (
     <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
@@ -30,10 +34,7 @@ export default function AlertDialogPopUp({
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-600 hover:bg-red-700"
-            onClick={() => {
-              console.log("Deleting ID:");
-              setIsAlertOpen(false);
-            }}
+            onClick={confirmDelete}
           >
             Continue
           </AlertDialogAction>

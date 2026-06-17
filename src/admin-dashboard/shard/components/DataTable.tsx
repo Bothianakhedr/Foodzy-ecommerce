@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   description,
   buttonText,
   searchKey,
-  setIsModalOpen,
+  setIsModalOpen
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -64,12 +64,11 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
-  console.log(table);
 
   return (
     <section>
       {/* ############Header */}
-      <div className="header flex items-center justify-between">
+      <div className="header flex items-center justify-between mt-5">
         <div>
           <h2 className="text-2xl font-bold"> {title}</h2>
           <p className="text-sm text-gray-600">{description}</p>
@@ -95,9 +94,9 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder={searchKey}
             className="max-w-sm ps-8 "
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
             onChange={(e) => {
-              table.getColumn("name")?.setFilterValue(e.target.value);
+              table.getColumn("title")?.setFilterValue(e.target.value);
             }}
           />
         </div>
