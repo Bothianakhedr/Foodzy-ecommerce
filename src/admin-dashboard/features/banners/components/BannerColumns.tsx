@@ -1,5 +1,6 @@
 "use client";
 
+import { DropdownActions } from "@/admin-dashboard/shard/components/DropDownActions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -18,7 +19,7 @@ export type BannersColumnsType = {
 
 export const BannersColumns = (
   onDelete: (id: string) => void,
-  onEdit: (bannerId:string) => void,
+  onEdit: (bannerId: string) => void,
 ): ColumnDef<BannersColumnsType>[] => [
   {
     id: "select",
@@ -111,20 +112,25 @@ export const BannersColumns = (
       const banner = row.original;
 
       return (
-        <div className="flex gap-3 items-center">
-          <Button
-          onClick={()=>onEdit(banner._id)}
-           variant="outline" size="sm">
-            update
-          </Button>
-          <Button
-            onClick={() => onDelete(banner._id)}
-            variant="destructive"
-            size="sm"
-          >
-            delete
-          </Button>
-        </div>
+        // <div className="flex gap-3 items-center">
+        //   <Button
+        //     className="cursor-pointer"
+        //     onClick={() => onEdit(banner._id)}
+        //     variant="outline"
+        //     size="sm"
+        //   >
+        //     update
+        //   </Button>
+        //   <Button
+        //     className="cursor-pointer"
+        //     onClick={() => onDelete(banner._id)}
+        //     variant="destructive"
+        //     size="sm"
+        //   >
+        //     delete
+        //   </Button>
+        // </div>
+        <DropdownActions onDelete={onDelete} banner={banner} onEdit={onEdit} />
       );
     },
   },
