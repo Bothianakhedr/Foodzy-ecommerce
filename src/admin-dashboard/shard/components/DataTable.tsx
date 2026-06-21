@@ -29,7 +29,7 @@ export type DataTableProps<TData, TValue> = {
   data: TData[];
   title?: string;
   description?: string;
-  searchKey?: string;
+  searchKey: string;
   buttonText?: string;
   setIsModalOpen: (isOpen: boolean) => void;
 };
@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   description,
   buttonText,
   searchKey,
-  setIsModalOpen
+  setIsModalOpen,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -92,18 +92,20 @@ export function DataTable<TData, TValue>({
         <div className="relative">
           <Search className="text-gray-200 w-5 absolute left-2 top-1 " />
           <Input
-            placeholder={searchKey}
+            placeholder="Search ..."
             className="max-w-sm ps-8 "
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
+            }
             onChange={(e) => {
-              table.getColumn("title")?.setFilterValue(e.target.value);
+              table.getColumn(searchKey)?.setFilterValue(e.target.value);
             }}
           />
         </div>
 
         <div className="flex mt-4 items-center gap-2">
           <Button
-            onClick={() => table.getColumn("name")?.setFilterValue("")}
+            onClick={() => table.getColumn("title")?.setFilterValue("")}
             className="cursor-pointer"
           >
             Reset

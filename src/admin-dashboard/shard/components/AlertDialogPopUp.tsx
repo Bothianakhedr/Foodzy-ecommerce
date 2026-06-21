@@ -11,14 +11,12 @@ import {
 type AlertDialogPopUpProps = {
   isAlertOpen: boolean;
   setIsAlertOpen: (isOpen: boolean) => void;
-  confirmDelete :()=>void
-
+  confirmDelete: () => void;
 };
 export default function AlertDialogPopUp({
   isAlertOpen,
   setIsAlertOpen,
-  confirmDelete
-  
+  confirmDelete,
 }: AlertDialogPopUpProps) {
   return (
     <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>

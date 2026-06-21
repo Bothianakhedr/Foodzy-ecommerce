@@ -35,8 +35,8 @@ export const columns = (
     ),
   },
   {
-    accessorKey: "image",
-    header: "Image",
+    accessorKey: "icon",
+    header: "Icon",
   },
   {
     accessorKey: "name",
@@ -80,15 +80,14 @@ export const columns = (
           size="sm"
           className="cursor-pointer"
           onClick={() => {
-            handleEdit(row.original)
-            
+            handleEdit(row.original);
           }}
         >
           <Edit2Icon className="h-4 w-4" />
         </Button>
         <Button
           variant="ghost"
-          onClick={()=> handleDelete(row.original)}
+          onClick={() => handleDelete(row.original)}
           size="sm"
           className="text-red-600 cursor-pointer"
         >

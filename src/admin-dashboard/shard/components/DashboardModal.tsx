@@ -22,7 +22,7 @@ export function DashboardModal({
   setIsModalOpen,
 }: DashboardModalType) {
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen} >
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">{title}</DialogTitle>

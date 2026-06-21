@@ -13,9 +13,13 @@ export type BannersColumnsType = {
   image: string;
   placement: "home_top" | "home_bottom";
   isActive: boolean | string;
+  _id: string;
 };
 
-export const BannersColumns: ColumnDef<BannersColumnsType>[] = [
+export const BannersColumns = (
+  onDelete: (id: string) => void,
+  onEdit: (bannerId:string) => void,
+): ColumnDef<BannersColumnsType>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -72,13 +76,13 @@ export const BannersColumns: ColumnDef<BannersColumnsType>[] = [
     cell: ({ row }) => {
       const placement = row.getValue("placement") as string;
       return placement === "home_top" ? (
-        <Badge className="text-orange-500 bg-orange-300 p-1 rounded-md">
+        <Badge className="text-orange-500 bg-orange-100 p-2 rounded-md">
           Home Top
         </Badge>
       ) : (
-        <Badge className="text-yellow-500 bg-yellow-300 p-1 rounded-md">
+        <Badge className="text-yellow-500 bg-yellow-100 p-1 rounded-md">
           Home Bottom
-        </Badge> // 👈 هنا اتصلحت
+        </Badge>
       );
     },
   },
@@ -89,11 +93,11 @@ export const BannersColumns: ColumnDef<BannersColumnsType>[] = [
     cell: ({ row }) => {
       const status = row.getValue("isActive");
       return status ? (
-        <Badge className="bg-green-300 text-green-500 rounded-md p-1">
+        <Badge className="bg-green-100 text-green-500 rounded-md p-1">
           Active
         </Badge>
       ) : (
-        <Badge className="bg-red-300 text-red-500 rounded-md p-1">
+        <Badge className="bg-red-100 text-red-500 rounded-md p-1">
           inActive
         </Badge>
       );
@@ -103,15 +107,21 @@ export const BannersColumns: ColumnDef<BannersColumnsType>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: () => {
-      // const banner = row.original;
+    cell: ({ row }) => {
+      const banner = row.original;
 
       return (
         <div className="flex gap-3 items-center">
-          <Button variant="outline" size="sm">
+          <Button
+          onClick={()=>onEdit(banner._id)}
+           variant="outline" size="sm">
             update
           </Button>
-          <Button variant="destructive" size="sm">
+          <Button
+            onClick={() => onDelete(banner._id)}
+            variant="destructive"
+            size="sm"
+          >
             delete
           </Button>
         </div>
