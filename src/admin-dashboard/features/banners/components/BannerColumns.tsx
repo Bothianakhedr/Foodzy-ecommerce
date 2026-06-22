@@ -6,16 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import type { BannersColumnsType } from "../types";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type BannersColumnsType = {
-  title: string;
-  image: string;
-  placement: "home_top" | "home_bottom";
-  isActive: boolean | string;
-  _id: string;
-};
+
 
 export const BannersColumns = (
   onDelete: (id: string) => void,
@@ -130,7 +125,7 @@ export const BannersColumns = (
         //     delete
         //   </Button>
         // </div>
-        <DropdownActions onDelete={onDelete} banner={banner} onEdit={onEdit} />
+        <DropdownActions onDelete={onDelete} data={banner} onEdit={onEdit} />
       );
     },
   },

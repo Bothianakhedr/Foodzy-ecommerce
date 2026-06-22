@@ -1,19 +1,16 @@
+import { DropdownActions } from "@/admin-dashboard/shard/components/DropDownActions";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit2Icon, Trash2 } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
+import type { CategoriesColumnsType } from "../types";
 
-export type Categories = {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-};
 
-export const columns = (
-  handleEdit: (data: Categories) => void,
-  handleDelete: (data: Categories) => void,
-): ColumnDef<Categories>[] => [
+
+export const CategoryColumns = (
+  onDelete: (id: string) => void,
+  onEdit: (id: string) => void,
+): ColumnDef<CategoriesColumnsType>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,7 +33,18 @@ export const columns = (
   },
   {
     accessorKey: "icon",
-    header: "Icon",
+    cell: ({ row }) => {
+      const icon = row.getValue("icon") as string;
+      return (
+        <div className="w-12 h-10 overflow-hidden border rounded-md bg-muted ">
+          <img
+            src={icon}
+            alt="category"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      );
+    },
   },
   {
     accessorKey: "name",
@@ -56,44 +64,16 @@ export const columns = (
     accessorKey: "description",
     header: "Description",
   },
-  {
-    accessorKey: "date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          CreatedAt
-          <ArrowUpDown className="w-3 h-3 text-gray-400 " />
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "action",
     header: "Action",
-    cell: ({ row }) => (
-      <div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="cursor-pointer"
-          onClick={() => {
-            handleEdit(row.original);
-          }}
-        >
-          <Edit2Icon className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={() => handleDelete(row.original)}
-          size="sm"
-          className="text-red-600 cursor-pointer"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const category = row.original;
+
+      return (
+        <DropdownActions onDelete={onDelete} data={category} onEdit={onEdit} />
+      );
+    },
   },
 ];

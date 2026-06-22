@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Field, FieldGroup } from "@/components/ui/field";
@@ -9,41 +9,20 @@ import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-import { addCategory } from "../services";
 
-export type CategoryFormInput = {
-  title: string;
-  description: string;
-  icon: FileList;
-  isActive: boolean;
-};
-export function CategoryForm() {
-  const { control, handleSubmit, reset, register } = useForm<CategoryFormInput>(
-    {
-      defaultValues: {
-        title: "",
-        description: "",
-        isActive: false,
-        icon: {} as FileList,
-      },
-    },
-  );
+import { useCategoryForm } from "../hooks/useCategoryForm";
+import type { CategoryFormProps } from "../types";
 
-  const addCategoryMutation = useMutation({
-    mutationFn: (payload: CategoryFormInput) => addCategory(payload),
-    onSuccess: () => {
-      console.log("true");
-    },
-    onError: () => {
-      console.log("error");
-    },
-  });
 
-  function onSubmit(data: CategoryFormInput) {
-    addCategoryMutation.mutate(data);
-  }
 
+export function CategoryForm({
+  selectedCategory,
+  setIsModalOpen,
+}: CategoryFormProps) {
+  const { control, handleSubmit, onSubmit, register, reset, watchedIcon } =
+    useCategoryForm({ selectedCategory, setIsModalOpen });
+    console.log(selectedCategory?.icon);
+    
   return (
     <Card className="w-full sm:max-w-md">
       <CardContent>
@@ -56,7 +35,13 @@ export function CategoryForm() {
     hover:bg-gray-100 transition cursor-pointer"
               >
                 <Upload className="w-4 h-4 text-gray-500" />
-                <p>Click to upload Image</p>
+                <p>
+                  {watchedIcon && watchedIcon.length > 0
+                    ? watchedIcon[0].name
+                    : selectedCategory?.icon
+                      ? selectedCategory.icon.split("/").pop()
+                      : "Click to upload icon"}
+                </p>
               </Label>
               <Input
                 type="file"
@@ -67,7 +52,7 @@ export function CategoryForm() {
               />
             </div>
             <Controller
-              name="title"
+              name="name"
               control={control}
               render={({ field }) => (
                 <Field>

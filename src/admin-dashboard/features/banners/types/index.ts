@@ -1,5 +1,10 @@
-import type { BannersColumnsType } from "../components/BannerColumns";
-
+export type BannersColumnsType = {
+  title: string;
+  image: string;
+  placement: "home_top" | "home_bottom";
+  isActive: boolean | string;
+  _id: string;
+};
   export type BannerFormInput = {
    title: string;
    placement: string;
@@ -11,8 +16,4 @@ import type { BannersColumnsType } from "../components/BannerColumns";
    bannerInfo?: BannersColumnsType;
  };
 
-  export type DropdownActionsType = {
-  onDelete: (id: string) => void;
-  onEdit: (bannerId: string) => void;
-  banner: BannersColumnsType;
-};
+ 

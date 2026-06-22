@@ -9,18 +9,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { BannersColumnsType } from "@/admin-dashboard/features/banners/components/BannerColumns";
+import type { CategoriesColumnsType } from "@/admin-dashboard/features/categories/components/categoryColumns";
+import type { BannersColumnsType } from "@/admin-dashboard/features/banners/types";
 
  export type DropdownActionsType = {
   onDelete: (id: string) => void;
-  onEdit: (bannerId: string) => void;
-  banner: BannersColumnsType;
+  onEdit: (id: string) => void;
+  data: BannersColumnsType | CategoriesColumnsType;
 };
 export function DropdownActions({
   onEdit,
-  banner,
+  data,
   onDelete,
 }: DropdownActionsType) {
+
+  
   return (
     <DropdownMenu >
       <DropdownMenuTrigger asChild>
@@ -28,7 +31,7 @@ export function DropdownActions({
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => onEdit(banner._id)}>
+          <DropdownMenuItem onClick={() => onEdit(data._id)}>
             <PencilIcon />
             Edit
           </DropdownMenuItem>
@@ -37,7 +40,7 @@ export function DropdownActions({
         <DropdownMenuGroup>
           <DropdownMenuItem
             variant="destructive"
-            onClick={() => onDelete(banner._id)}
+            onClick={() => onDelete(data._id)}
           >
             <TrashIcon />
             Delete

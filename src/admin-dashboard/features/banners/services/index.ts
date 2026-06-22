@@ -8,7 +8,6 @@ export async function getAllBanners() {
 // get banner
 export async function getBanner(bannerId: string) {
   return await axiosInstance.get(`admin/banners/${bannerId}`);
-  
 }
 
 // Add Banner

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addBanner, editBanner } from "../services";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { handleAxiosError } from "@/admin-dashboard/shard/helper/handleAxiosError";
 
 export function useBannerForm({ bannerInfo, setIsModalOpen }: BannerFormProps) {
   const { handleSubmit, control, reset, register, watch } =
@@ -39,9 +39,7 @@ export function useBannerForm({ bannerInfo, setIsModalOpen }: BannerFormProps) {
       reset();
     },
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      }
+      handleAxiosError(error)
     },
   });
   // Edit Banner
@@ -57,9 +55,7 @@ export function useBannerForm({ bannerInfo, setIsModalOpen }: BannerFormProps) {
       reset();
     },
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      }
+     handleAxiosError(error)
     },
   });
   // submit form
